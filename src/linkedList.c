@@ -23,3 +23,19 @@ void linkedlist_add(LinkedList *list, int value) {
 	list->end->next = node;
 	list->end = node;
 }
+
+int linkedlist_search(LinkedList *list, int x) {
+	int idx = -1;
+
+	LinkedListNode *current = list->start;
+
+	do {
+		if (current->value == x) {
+			return idx + 1;
+		}
+		current = current->next;
+		idx++;
+	} while (current != NULL);
+
+  return idx;
+}

@@ -19,10 +19,15 @@ int main() {
 
 	LinkedListNode *current = list.start;
 
+	int i = 0;
+
 	do {
-		printf("%d\n", current->value);
+		printf("%d: %d\n", i, current->value);
 		current = current->next;
+		i++;
 	} while (current != NULL);
+
+	printf("search: %d\n", linkedlist_search(&list, 7));
 
 	return 0;
 }

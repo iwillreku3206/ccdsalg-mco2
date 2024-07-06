@@ -6,9 +6,11 @@
 
 typedef struct Graph {
 	int vertexCount;
-	String *vertexList;			   // array
+	String *vertexList;		   // array
 	LinkedList *adjacencyList; // array
-								   // stores index of vertex from vertexList
+							   // stores index of vertex from vertexList
 } Graph;
+
+void init_graph(Graph *graph, String vertexList[], int vertexCount);
 
 #endif

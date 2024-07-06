@@ -13,5 +13,6 @@ typedef struct LinkedList {
 
 void linkedlist_init(LinkedList *list);
 void linkedlist_add(LinkedList *list, int value);
+int linkedlist_search(LinkedList *list, int x);
 
 #endif
