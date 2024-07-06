@@ -19,6 +19,13 @@ void add_edge(Graph *graph, int from, int to) {
 	LinkedList *fromList = &graph->adjacencyList[from];
 	LinkedList *toList = &graph->adjacencyList[from];
   // check if edge already exists
-  int fromIndex = linkedlist_search(fromList, to);
-  int toIndex = linkedlist_search(fromList, from);
+  int edgeIndex = linkedlist_search(fromList, to);
+
+  if (edgeIndex != -1) {
+    return; // edge already exists, no need to do anything
+  }
+
+  // if not, we add the edge to both linked lists
+  linkedlist_add(fromList, to);
+  linkedlist_add(toList, from);
 }
