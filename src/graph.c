@@ -5,6 +5,7 @@
 #include <string.h>
 
 void graph_init(Graph *graph, String vertexList[], int vertexCount) {
+	graph->vertexCount = vertexCount;
 	graph->vertexList = (String *)malloc(sizeof(String) * vertexCount);
 	graph->adjacencyMatrix = (bool **)malloc(sizeof(bool *) * vertexCount);
 
@@ -23,12 +24,10 @@ void graph_add_edge(Graph *graph, int from, int to) {
 	bool *toList = graph->adjacencyMatrix[to];
 	// check if edge already exists
 	if (fromList[to] == true) {
-		printf("Edge (%d, %d) exists\n", from, to);
 		return; // edge already exists, no need to do anything
 	}
 
-	// if not, we add the edge to both linked lists
+	// if not, we add the edge to both parts of the matrix 
 	fromList[to] = true;
 	toList[from] = true;
-	printf("Adding edge (%d, %d)\n", from, to);
 }
