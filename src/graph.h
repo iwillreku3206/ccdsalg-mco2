@@ -2,15 +2,15 @@
 #define GRAPH_H
 
 #include "commonTypes.h"
-#include "linkedList.h"
+#include <stdbool.h>
 
 typedef struct Graph {
 	int vertexCount;
-	String *vertexList;		   // array
-	LinkedList *adjacencyList; // array
-							   // stores index of vertex from vertexList
+	String *vertexList;		// array
+	bool **adjacencyMatrix; // 2d array
 } Graph;
 
-void init_graph(Graph *graph, String vertexList[], int vertexCount);
+void graph_init(Graph *graph, String vertexList[], int vertexCount);
+void graph_add_edge(Graph *graph, int from, int to);
 
 #endif
