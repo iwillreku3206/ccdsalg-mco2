@@ -7,13 +7,13 @@ void stack_init(Stack *s) {
 	}
 }
 
-int stack_push(Stack *s, int type, int value) {
+int stack_push(Stack *s, int value) {
 	if (s->top >= STACK_SIZE - 1) {
 		return STACK_ERR_OVERFLOW;
 	}
 	SQItem item;
 	item.value = value;
-	item.type = type;
+	item.type = ITEM_TYPE_VALUE;
 	s->items[++s->top] = item;
 	return STACK_NO_ERROR;
 }

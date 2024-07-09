@@ -1,5 +1,7 @@
 #include "bfs.h"
+#include "dfs.h"
 #include "graph.h"
+#include <stdio.h>
 
 int main() {
 	// LinkedList list;
@@ -31,7 +33,9 @@ int main() {
 	graph_add_edge(&graph, 3 - 1, 7 - 1);
 	graph_add_edge(&graph, 3 - 1, 8 - 1);
 
-	bfs(&graph, &bfsTree, 5- 1);
+	bfs(&graph, &bfsTree, 5 - 1);
+  printf("\n");
+	dfs(&graph, &bfsTree, 7 - 1);
 
 	return 0;
 }

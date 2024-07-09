@@ -18,7 +18,7 @@ typedef struct {
 } Stack;
 
 void stack_init(Stack *s);
-int stack_push(Stack *s, int type, int value);
+int stack_push(Stack *s, int value);
 SQItem stack_pop(Stack *s);
 SQItem stack_top(Stack *s);
 bool stack_is_empty(Stack *s);
