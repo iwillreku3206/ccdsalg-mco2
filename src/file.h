@@ -3,6 +3,6 @@
 
 #include "graph.h"
 
-Graph *read_graph(String fileName);
+int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES]);
 
 #endif
