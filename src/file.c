@@ -3,6 +3,17 @@
 #include <string.h>
 #include "graph.h"
 #include "commonTypes.h"
+// for lowercasing
+#include <ctype.h>
+
+void to_lowercase(const char *src, char *dest) {
+    while (*src) {
+        *dest = tolower((unsigned char) *src);
+        src++;
+        dest++;
+    }
+    *dest = '\0';
+}
 
 // Note, I've been using const char since we have string limits but it seems to be a way
 // to make it so that the size 256 when strings are shorter don't mess with stuff
@@ -46,9 +57,14 @@ void split_string(const char *originalLine, String destinationNames[MAX_VERTICES
 // For finds a valid name, for linking and for the asking of starting node
 int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCount) {
     int i;
+    String lowerName;
+    String lowerVertexName;
+
+    to_lowercase(name, lowerName);
 
     for (i = 0; i < vertexCount; i++) {
-        if (strcmp(name, vertexNames[i]) == 0) {
+        to_lowercase(vertexNames[i], lowerVertexName);
+        if (strcmp(lowerName, lowerVertexName) == 0) {
             return i;
         }
     }
