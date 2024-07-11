@@ -6,15 +6,13 @@
 // for lowercasing
 #include <ctype.h>
 
-void to_lowercase(const char *src, char *dest) {
-    while (*src) {
-        *dest = tolower((unsigned char) *src);
-        src++;
-        dest++;
+void to_lowercase(const char *input, String output) {
+    int i;
+    for (i = 0; input[i] && i < 255; i++) {
+        output[i] = tolower(input[i]);
     }
-    *dest = '\0';
+    output[i] = '\0';  // Ensure null-termination
 }
-
 // Note, I've been using const char since we have string limits but it seems to be a way
 // to make it so that the size 256 when strings are shorter don't mess with stuff
 
@@ -80,7 +78,7 @@ void add_link(Vertex *vertex, int index) {
     }
 }
 
-int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES]) {
+int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     // Counters
     int i;
     int j;
@@ -135,6 +133,8 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES]) {
 
     // Close file
     fclose(file);
+
+    *totalNodes = vertexCount;
 
     // Initialize nodes array
     for (i = 0; i < vertexCount; i++) {

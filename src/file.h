@@ -3,6 +3,6 @@
 
 #include "graph.h"
 
-int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES]);
+int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes);
 
 #endif
