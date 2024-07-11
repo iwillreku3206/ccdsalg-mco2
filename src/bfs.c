@@ -27,7 +27,9 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 
 	while (!queue_empty(&queue)) {
 		int vertex = queue_dequeue(&queue).value;
-    fprintf(file, "%s ", nodes[vertex].name);
+    	fprintf(file, "%s ", nodes[vertex].name);
+	    printf("%s ", nodes[vertex].name);
+
 		for (int i = 0; i < graph->vertexCount; i++) {
 			if (graph->adjacencyMatrix[vertex][i] == true &&
 				discovered[i] == false) {

@@ -20,6 +20,7 @@ void dfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 	while (!stack_is_empty(&stack)) {
 		int vertex = stack_pop(&stack).value;
 		fprintf(file, "%s ", nodes[vertex].name);
+		printf("%s ", nodes[vertex].name);
 		for (int i = graph->vertexCount - 1; i >= 0; i--) {
 			if (graph->adjacencyMatrix[vertex][i] == true &&
 				discovered[i] == false) {

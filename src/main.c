@@ -31,6 +31,7 @@ int main() {
 		// SET TO 9, the outputs in the specs seem to be of size 9 or so
 		// May be adjusted to be higher later, just following the specs for now
 		fprintf(traversals, "%-9s %d\n", nodes[i].name, nodes[i].linkCount);
+		printf("%-9s %d\n", nodes[i].name, nodes[i].linkCount);
 	}
 	fprintf(traversals, "\n");
 
@@ -38,6 +39,7 @@ int main() {
 	// the names of each node instead of the previous just index + 1 version
 	bfs(&graph, &bfsTree, startIndex, traversals, nodes);
     fprintf(traversals, "\n\n");
+	printf("\n\n");
 	dfs(&graph, &bfsTree, startIndex, traversals, nodes);
 
 	fclose(traversals);
