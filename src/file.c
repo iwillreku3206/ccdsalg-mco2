@@ -6,16 +6,30 @@
 // for lowercasing
 #include <ctype.h>
 
+// NOTE: Some strings are set to const char since the String sizes might not be consistent
+
+/* Converts a single word to lowercase using ctype.h's tolower
+Precondition: None
+@param const char *input <the string to convert>
+@param String output <lowercased version>
+@return none, changes the value of the lowercaed version
+*/
 void to_lowercase(const char *input, String output) {
     int i;
     for (i = 0; input[i] && i < 255; i++) {
         output[i] = tolower(input[i]);
     }
-    output[i] = '\0';  // Ensure null-termination
+    // To close the word for sure
+    output[i] = '\0';
 }
-// Note, I've been using const char since we have string limits but it seems to be a way
-// to make it so that the size 256 when strings are shorter don't mess with stuff
 
+/* Splits a line to separate each name within as well as the -1
+Precondition: None
+@param const char *originalLine <the line to split>
+@param String destinationNames[MAX_VERTICES + 1] <There is a max vertices set, with +1 to consider the last "-1">
+@param int *nameCount <Tracks the number of words split>
+@return none, places items within destinationNames
+*/
 void split_string(const char *originalLine, String destinationNames[MAX_VERTICES + 1], int *nameCount) {
     int i = 0;
     int j = 0;
@@ -52,7 +66,13 @@ void split_string(const char *originalLine, String destinationNames[MAX_VERTICES
     }
 }
 
-// For finds a valid name, for linking and for the asking of starting node
+/* Finds the index of a name to find, puts strings into lower case to be case insensitive
+Precondition: None
+@param const char *name <The name key>
+@param String vertexNames[MAX_VERTICES] <From the list of names to be matched>
+@param int vertexCount <Number of names>
+@return int, index of the name found or -1 if not
+*/
 int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCount) {
     int i;
     String lowerName;
@@ -67,10 +87,17 @@ int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCou
             return i;
         }
     }
+
+    // Not found
     return -1;
 }
 
-// Adds a given index to a the links of a vertex
+/* Modifies a Vertex to increase linkCounts and add a new item to the links
+Precondition: None
+@param Vertex *vertex <Vertex to be modified>
+@param int index <index of a new link to add>
+@return none, modifies Vertex content
+*/
 void add_link(Vertex *vertex, int index) {
     if (vertex->linkCount < MAX_VERTICES) {
         vertex->links[vertex->linkCount] = index;
@@ -78,7 +105,37 @@ void add_link(Vertex *vertex, int index) {
     }
 }
 
+/* Modifies a Vertex to increase linkCounts and add a new item to the links
+Precondition: None
+@param Graph *graph <Graph being modified to be initialized and have edges added>
+@param Vertex nodes[MAX_VERTICES] <Vertex array within main to be edited>
+@param int *totalNodes <Total number of nodes reached>
+@return int, the index of the starting node for the graph searches
+*/
 int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
+
+    /*
+    PROCESS
+    NOTE: I have the file inputs to keep looping when asking for an input, maybe its supposed to stop after 1 invalid
+
+    1. Get the file, validate if it exists
+        - Contains the File not found as per specs
+        - The text files are outside of src
+    2. Read the chosen file contents through fscanf of number of nodes, fgets for whole lines
+        - all lines are placed within an array
+    3. Now that an array of each name string is set from each line
+        - Get fromIndex from the [0] of each line
+        - Set toIndex from the names afterwards until "-1"
+        - To avoid duplicates, compare to the current fromIndex in loop so that it must be higher
+    4. Add Link to both to and from Indexes to set up their links
+    5. Now that every content is ready, do graph_init
+    6. Start adding graph edges, compare the current toIndex to avoid duplicates again
+    7. Now that all node names have been set, ask for starting vertex name for the search
+        - Keep asking until a valid answer is put
+        - has Vertex <name> not found. as per specs
+    8. Find the index where the name is kept, return it at the end as starting point for search
+    */
+
     // Counters
     int i;
     int j;
@@ -140,6 +197,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     for (i = 0; i < vertexCount; i++) {
         strcpy(nodes[i].name, "");
         for (j = 0; j < MAX_VERTICES; j++) {
+            // Set to -1 for now for not found
             nodes[i].links[j] = -1;
         }
     }
@@ -198,6 +256,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     // GRAPH SETUP
     graph_init(graph, vertexNames, vertexCount);
 
+    // Adding of edges
     for (i = 0; i < vertexCount; i++) {
         for (j = 0; j < nodes[i].linkCount; j++) {
             int toIndex = nodes[i].links[j];
@@ -211,10 +270,12 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     int startIndex = -1;
     String nodeName;
 
+    // Inputting of starting node
     do {
         printf("Input start vertex for traversal: ");
         scanf("%s", nodeName);
 
+        // has case insensitivity
         startIndex = find_index(nodeName, vertexNames, vertexCount);
 
         if (startIndex == -1){
