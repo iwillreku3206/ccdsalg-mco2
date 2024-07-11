@@ -15,7 +15,7 @@ int main() {
     int startIndex = graph_setup(&graph, nodes);
 	
 	bfs(&graph, &bfsTree, startIndex);
-  printf("\n");
+    printf("\n");
 	dfs(&graph, &bfsTree, startIndex);
 
 	return 0;

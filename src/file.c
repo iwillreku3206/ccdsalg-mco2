@@ -63,6 +63,7 @@ int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCou
     to_lowercase(name, lowerName);
 
     for (i = 0; i < vertexCount; i++) {
+        // case insensitivity
         to_lowercase(vertexNames[i], lowerVertexName);
         if (strcmp(lowerName, lowerVertexName) == 0) {
             return i;
@@ -110,7 +111,11 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES]) {
     do {
         printf("Input filename: ");
         scanf("%s", fileName);
-        file = fopen(fileName, "r");
+
+        String path = "../";
+        strcat(path, fileName);
+
+        file = fopen(path, "r");
 
         if (file == NULL) {
             printf("%s not found.\n", fileName);

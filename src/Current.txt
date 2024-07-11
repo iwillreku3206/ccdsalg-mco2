@@ -1,9 +1,0 @@
-8
-one two six -1
-two one five three -1
-three two five four seven eight -1
-four three -1
-five two three -1
-six one eight -1
-seven three -1
-eight six three -1
