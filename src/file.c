@@ -168,7 +168,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     scanf("%s", fileName);
 
     // now set up to work with outside src group6.exe
-    String path = "../";
+    String path = "./";
     strcat(path, fileName);
 
     file = fopen(path, "r");
