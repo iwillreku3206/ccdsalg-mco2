@@ -168,6 +168,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
         scanf("%s", fileName);
 
         String path = "../";
+        
         strcat(path, fileName);
 
         file = fopen(path, "r");
@@ -196,6 +197,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     // Initialize nodes array
     for (i = 0; i < vertexCount; i++) {
         strcpy(nodes[i].name, "");
+        nodes[i].linkCount = 0;
         for (j = 0; j < MAX_VERTICES; j++) {
             // Set to -1 for now for not found
             nodes[i].links[j] = -1;
