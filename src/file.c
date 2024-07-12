@@ -163,20 +163,21 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     String line;
 
     // Start by reading the file
-    do {
-        printf("Input filename: ");
-        scanf("%s", fileName);
 
-        String path = "../";
-        
-        strcat(path, fileName);
+    printf("Input filename: ");
+    scanf("%s", fileName);
 
-        file = fopen(path, "r");
+    // now set up to work with outside src group6.exe
+    String path = "../";
+    strcat(path, fileName);
 
-        if (file == NULL) {
-            printf("%s not found.\n", fileName);
-        }
-    } while (file == NULL);
+    file = fopen(path, "r");
+
+    if (file == NULL) {
+        printf("%s not found.\n", fileName);
+        fclose(file);
+        return -1;
+    }
 
     // Read starting from the vertex count
     // Has \n since it would end up reading a blank afterwards
@@ -269,21 +270,20 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
         }
     }
 
-    int startIndex = -1;
+    int startIndex;
     String nodeName;
 
     // Inputting of starting node
-    do {
-        printf("Input start vertex for traversal: ");
-        scanf("%s", nodeName);
+    printf("Input start vertex for traversal: ");
+    scanf("%s", nodeName);
 
-        // has case insensitivity
-        startIndex = find_index(nodeName, vertexNames, vertexCount);
+    // has case insensitivity
+    startIndex = find_index(nodeName, vertexNames, vertexCount);
 
-        if (startIndex == -1){
-            printf("Vertex %s not found.\n", nodeName);
-        }
-    } while (startIndex == -1);
+    if (startIndex == -1){
+        printf("Vertex %s not found.\n", nodeName);
+        return -1;
+    }
 
     return startIndex;
 }
