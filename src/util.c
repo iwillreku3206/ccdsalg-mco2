@@ -9,7 +9,7 @@ void swap(int *a, int *b) {
 
 // bubble sort
 void sort_by_name(String names[], int A[], int n) {
-	if (n == 1)
+	if (n <= 1)
 		return;
 	for (int i = 0; i < n - 1; i++) {
 		for (int j = i; j < n; j++) {

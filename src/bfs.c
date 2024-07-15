@@ -1,6 +1,7 @@
 #include "bfs.h"
 #include "graph.h"
 #include "queue.h"
+#include "util.h"
 #include <stdio.h>
 
 bool all_discovered(bool A[], int n) {
@@ -51,9 +52,15 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 			}
 		}
 
-		// next, sort the vertices
-		// queue_enqueue(&queue, i);
-		// graph_add_edge(bfsTree, vertex, i);
-		// discovered[i] = true;
+		// next, sort the array
+		sort_by_name(graph->vertexList, nextVertices, numNextVertices);
+
+    if (numNextVertices > 0) {
+		// enqueue the lowest vertex in the list
+		queue_enqueue(&queue, nextVertices[0]);
+		graph_add_edge(bfsTree, vertex, nextVertices[0]);
+		discovered[nextVertices[0]] = true;
+
+    }
 	}
 }
