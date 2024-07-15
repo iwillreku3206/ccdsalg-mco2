@@ -28,13 +28,33 @@ void bfs(Graph *graph, Graph *bfsTree, int from) {
 	while (!queue_empty(&queue)) {
 		int vertex = queue_dequeue(&queue).value;
     printf("%d ", vertex + 1);
+
+    // get list of next vertices
+    // first, get the number of next vertices
+    int numNextVertices = 0;
+    
 		for (int i = 0; i < graph->vertexCount; i++) {
 			if (graph->adjacencyMatrix[vertex][i] == true &&
 				discovered[i] == false) {
-				queue_enqueue(&queue, i);
-				graph_add_edge(bfsTree, vertex, i);
-				discovered[i] = true;
+        numNextVertices++;
 			}
 		}
+
+    // next, place them all in an array
+    int nextVertices[numNextVertices];
+    int tmp = 0;
+
+		for (int i = 0; i < graph->vertexCount; i++) {
+			if (graph->adjacencyMatrix[vertex][i] == true &&
+				discovered[i] == false) {
+        nextVertices[tmp] = i;
+        tmp++;
+			}
+		}
+
+    // next, sort the vertices
+				//queue_enqueue(&queue, i);
+				//graph_add_edge(bfsTree, vertex, i);
+				//discovered[i] = true;
 	}
 }
