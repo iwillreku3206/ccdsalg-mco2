@@ -12,7 +12,7 @@ bool all_discovered(bool A[], int n) {
 	return true;
 }
 
-void bfs(Graph *graph, Graph *bfsTree, int from) {
+void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 	Queue queue;
 	bool discovered[graph->vertexCount];
 	graph_init(bfsTree, graph->vertexList, graph->vertexCount);
@@ -27,12 +27,9 @@ void bfs(Graph *graph, Graph *bfsTree, int from) {
 
 	while (!queue_empty(&queue)) {
 		int vertex = queue_dequeue(&queue).value;
-    printf("%d ", vertex + 1);
+    	fprintf(file, "%s ", nodes[vertex].name);
+	    printf("%s ", nodes[vertex].name);
 
-    // get list of next vertices
-    // first, get the number of next vertices
-    int numNextVertices = 0;
-    
 		for (int i = 0; i < graph->vertexCount; i++) {
 			if (graph->adjacencyMatrix[vertex][i] == true &&
 				discovered[i] == false) {
