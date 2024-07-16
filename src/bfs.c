@@ -28,6 +28,7 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 
 	while (!queue_empty(&queue)) {
 		int vertex = queue_dequeue(&queue).value;
+		printf("%s ", nodes[vertex].name);
 		fprintf(file, "%s ", nodes[vertex].name);
 
 		// place all discoverable vertices into an array
@@ -45,11 +46,11 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
 		// next, sort the array
 		sort_by_name(graph->vertexList, nextVertices, nextCount);
 
-		if (nextCount > 0) {
-			// enqueue the lowest vertex in the list
-			queue_enqueue(&queue, nextVertices[0]);
-			graph_add_edge(bfsTree, vertex, nextVertices[0]);
-			discovered[nextVertices[0]] = true;
+		// enqueue the next vertices in the list, in order
+		for (int i = 0; i < nextCount; i++) {
+			queue_enqueue(&queue, nextVertices[i]);
+			graph_add_edge(bfsTree, vertex, nextVertices[i]);
+			discovered[nextVertices[i]] = true;
 		}
 	}
 }
