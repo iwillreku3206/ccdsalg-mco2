@@ -12,6 +12,16 @@
 			// it can go back to the original from
 // 4. Profit
 
+
+/* Runs the recursion for the DFS
+Precondition: A valid graph was given to start the DFS
+@param Graph *graph <Graph that will be the source of the vertices>
+@param Graph *dfsTree <Graph that will be modified to contain the resulting tree>
+@param int activeIndex <Will become the next adjacent node's index to continue the recursion>
+@param FILE *file <The TRAVERSALS.txt where the movements will be printed>
+@param Vertex nodes[] <Array of nodes that contain the names, number of links, and array of linked indexes>
+@return none, will keep running while there are still nodes to check and continuously update the dfsTree
+*/
 void dfs_recursion(Graph *graph, Graph *dfsTree, int activeIndex, bool discovered[], FILE *file, Vertex nodes[]) {
 	// Set current to discovered
     discovered[activeIndex] = true;
@@ -37,6 +47,15 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int activeIndex, bool discovere
     }
 }
 
+/* Contains the logic for doing the Depth-First Search
+Precondition: A valid graph has been set up
+@param Graph *graph <Graph that will be the source of the vertices>
+@param Graph *dfsTree <Graph that will be modified to contain the resulting tree>
+@param int from <Starting point node's index>
+@param FILE *file <The TRAVERSALS.txt where the movements will be printed>
+@param Vertex nodes[] <Array of nodes that contain the names, number of links, and array of linked indexes>
+@return none, puts result in new dfsTree
+*/
 void dfs(Graph *graph, Graph *dfsTree, int from, FILE *file, Vertex nodes[]) {
 	// Initialize everything
     int i;
@@ -51,8 +70,6 @@ void dfs(Graph *graph, Graph *dfsTree, int from, FILE *file, Vertex nodes[]) {
     // Start recursion
     dfs_recursion(graph, dfsTree, from, discovered, file, nodes);
 }
-
-
 
 // original
 // void dfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
