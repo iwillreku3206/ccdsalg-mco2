@@ -33,8 +33,7 @@ int main() {
 		// Prints the node names,
 		for (i = 0; i < nodeCount; i++) {
 			// SET TO 9, the outputs in the specs seem to be of size 9 or so
-			// May be adjusted to be higher later, just following the specs for
-			// now
+			// May be adjusted to be higher later, just following the specs for now
       fprintf(traversals, "%-9s %d\n", nodes[i].name,
 						nodes[i].linkCount);
 			printf("%-9s %d\n", nodes[i].name, nodes[i].linkCount);

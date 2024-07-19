@@ -2,6 +2,8 @@
 #include "graph.h"
 #include "stack.h"
 #include <stdio.h>
+#include "util.h"
+#include <string.h>
 
 // GOAL for Recursion
 // 1. Initialize everything like graph_init and boolean array for each vertex
@@ -11,6 +13,26 @@
 	// - If not, Add the edge and stuff, do recursion on it so that when it finishes
 			// it can go back to the original from
 // 4. Profit
+
+// copied it for the time being
+void sort_vertices(Vertex nodes[], int links[], int linkCount) {
+    if (linkCount <= 1) return;
+
+    for (int i = 0; i < linkCount - 1; i++) {
+        for (int j = 0; j < linkCount - i - 1; j++) {
+            String name1, name2;
+            to_lowercase(nodes[links[j]].name, name1);
+            to_lowercase(nodes[links[j + 1]].name, name2);
+
+            if (strcmp(name1, name2) > 0) {
+                // Swap the links
+                int temp = links[j];
+                links[j] = links[j + 1];
+                links[j + 1] = temp;
+            }
+        }
+    }
+}
 
 
 /* Runs the recursion for the DFS
@@ -32,6 +54,8 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int activeIndex, bool discovere
 
 	// Get current vertex from the nodes so that we can limit loops to the number of links it has
     Vertex* currentVertex = &nodes[activeIndex];
+
+    // sort_vertices(nodes, currentVertex->links, currentVertex->linkCount);
     
 	// Check all of the adjacencies it has
     for (int i = 0; i < currentVertex->linkCount; i++) {
@@ -70,32 +94,3 @@ void dfs(Graph *graph, Graph *dfsTree, int from, FILE *file, Vertex nodes[]) {
     // Start recursion
     dfs_recursion(graph, dfsTree, from, discovered, file, nodes);
 }
-
-// original
-// void dfs(Graph *graph, Graph *bfsTree, int from, FILE *file, Vertex nodes[]) {
-// 	Stack stack;
-// 	bool discovered[graph->vertexCount];
-// 	graph_init(bfsTree, graph->vertexList, graph->vertexCount);
-// 	stack_init(&stack);
-
-// 	for (int i = 0; i < graph->vertexCount; i++) {
-// 		discovered[i] = false;
-// 	}
-
-// 	stack_push(&stack, from);
-// 	discovered[from] = true;
-
-// 	while (!stack_is_empty(&stack)) {
-// 		int vertex = stack_pop(&stack).value;
-// 		fprintf(file, "%s ", nodes[vertex].name);
-// 		printf("%s ", nodes[vertex].name);
-// 		for (int i = graph->vertexCount - 1; i >= 0; i--) {
-// 			if (graph->adjacencyMatrix[vertex][i] == true &&
-// 				discovered[i] == false) {
-// 				stack_push(&stack, i);
-// 				graph_add_edge(bfsTree, vertex, i);
-// 				discovered[i] = true;
-// 			}
-// 		}
-// 	}
-// }

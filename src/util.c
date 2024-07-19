@@ -36,3 +36,20 @@ void lowercase_name(String dest, String src) {
 		}
 	}
 }
+
+// I didn't know at the time lowercase_name existed if it did, sort it out later i guess
+
+/* Converts a single word to lowercase using ctype.h's tolower
+Precondition: None
+@param const char *input <the string to convert>
+@param String output <lowercased version>
+@return none, changes the value of the lowercaed version
+*/
+void to_lowercase(const char *input, String output) {
+    int i;
+    for (i = 0; input[i] && i < 255; i++) {
+        output[i] = tolower(input[i]);
+    }
+    // To close the word for sure
+    output[i] = '\0';
+}
