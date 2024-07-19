@@ -1,22 +1,22 @@
-zero      4
-one       3
-two       5
+zero      2
+one       4
+two       4
 three     2
 four      3
-five      5
-six       4
+five      4
+six       3
 seven     2
-eight     3
-nine      6
-ten       3
+eight     4
+nine      4
+ten       4
 eleven    3
-twelve    5
+twelve    3
 thirteen  4
-fourteen  1
+fourteen  3
 fifteen   4
 sixteen   3
-seventeen 2
+seventeen 4
 
-three six two five nine one zero four eight ten thirteen twelve seven eleven seventeen sixteen fifteen fourteen 
+zero one two five four three nine six eight seven ten thirteen eleven twelve fourteen seventeen sixteen fifteen 
 
-three two zero one five four seven six nine eight eleven fourteen fifteen twelve thirteen ten seventeen sixteen 
+zero one two three ten six five nine eight four seven fourteen eleven fifteen twelve sixteen thirteen seventeen 
