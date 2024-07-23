@@ -4,9 +4,6 @@
 #include <string.h>
 #include "graph.h"
 #include "commonTypes.h"
-// for lowercasing
-
-// NOTE: Some strings are set to const char since the String sizes might not be consistent
 
 /* Splits a line to separate each name within as well as the -1
 Precondition: None
@@ -63,11 +60,11 @@ int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCou
     String lowerName;
     String lowerVertexName;
 
-    to_lowercase(name, lowerName);
+    lowercase_name(lowerName, name);
 
     for (i = 0; i < vertexCount; i++) {
         // case insensitivity
-        to_lowercase(vertexNames[i], lowerVertexName);
+        lowercase_name(lowerVertexName, vertexNames[i]);
         if (strcmp(lowerName, lowerVertexName) == 0) {
             return i;
         }
@@ -77,68 +74,31 @@ int find_index(const char *name, String vertexNames[MAX_VERTICES], int vertexCou
     return -1;
 }
 
-/* Modifies a Vertex to increase linkCounts and add a new item to the links
-Precondition: None
-@param Vertex *vertex <Vertex to be modified>
-@param int index <index of a new link to add>
-@return none, modifies Vertex content
-*/
-void add_link(Vertex *vertex, int index) {
-    if (vertex->linkCount < MAX_VERTICES) {
-        vertex->links[vertex->linkCount] = index;
-        vertex->linkCount++;
-    }
-}
-
-/* Modifies a Vertex to increase linkCounts and add a new item to the links
+/* Modifies a Graph to add edges based on the file data
 Precondition: None
 @param Graph *graph <Graph being modified to be initialized and have edges added>
-@param Vertex nodes[MAX_VERTICES] <Vertex array within main to be edited>
-@param int *totalNodes <Total number of nodes reached>
+@param int *totalNodes <Number of nodes stored in main>
 @return int, the index of the starting node for the graph searches
 */
-int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
-
-    /*
-    PROCESS
-    NOTE: I have the file inputs to keep looping when asking for an input, maybe its supposed to stop after 1 invalid
-
-    1. Get the file, validate if it exists
-        - Contains the File not found as per specs
-        - The text files are outside of src
-    2. Read the chosen file contents through fscanf of number of nodes, fgets for whole lines
-        - all lines are placed within an array
-    3. Now that an array of each name string is set from each line
-        - Get fromIndex from the [0] of each line
-        - Set toIndex from the names afterwards until "-1"
-        - To avoid duplicates, compare to the current fromIndex in loop so that it must be higher
-    4. Add Link to both to and from Indexes to set up their links
-    5. Now that every content is ready, do graph_init
-    6. Start adding graph edges, compare the current toIndex to avoid duplicates again
-    7. Now that all node names have been set, ask for starting vertex name for the search
-        - Keep asking until a valid answer is put
-        - has Vertex <name> not found. as per specs
-    8. Find the index where the name is kept, return it at the end as starting point for search
-    */
-
+int graph_setup(Graph *graph, int *totalNodes) {
     // Counters
     int i;
     int j;
     int k;
     int lineCount = 0;
 
-    // Finding files
+    // File variables
     FILE *file = NULL;
     String fileName;
 
-    // vertex from .txt
+    // Number of vertices from .txt's first line
     int vertexCount;
 
     // Lines expected to be read from the .txt
     String lines[MAX_VERTICES];
 
     // The array that will store each name from each line including "-1"
-    // [max number of lines to be read][max number of possible vertices + 1 because of -1][character limit]
+    // [max number of lines to be read][max number of possible vertices + 1 because of -1]
     String names[MAX_VERTICES][MAX_VERTICES + 1];
 
     // Unique vertex names at the start of each line
@@ -148,13 +108,8 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     String line;
 
     // Start by reading the file
-
     printf("Input filename: ");
     scanf("%s", fileName);
-
-    // now set up to work with outside src group6.exe
-    // String path = "./";
-    // strcat(path, fileName);
 
     file = fopen(fileName, "r");
 
@@ -165,92 +120,48 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     }
 
     // Read starting from the vertex count
-    // Has \n since it would end up reading a blank afterwards
     fscanf(file, "%d\n", &vertexCount);
-    // printf("Vertex count: %d\n", vertexCount);
 
     while (fgets(line, sizeof(line), file)) {
+        // Remove last newline
+        int lineLength = strlen(line);
+        if (line[lineLength - 1] == '\n') {
+            line[lineLength - 1] = '\0';
+        }
         strcpy(lines[lineCount], line);
-        // printf("Current line %d: %s", lineCount + 1, lines[lineCount]);
         lineCount++;
     }
 
     // Close file
     fclose(file);
 
+    // Sets number of nodes at main
     *totalNodes = vertexCount;
-
-    // Initialize nodes array
-    for (i = 0; i < vertexCount; i++) {
-        strcpy(nodes[i].name, "");
-        nodes[i].linkCount = 0;
-        for (j = 0; j < MAX_VERTICES; j++) {
-            // Set to -1 for now for not found
-            nodes[i].links[j] = -1;
-        }
-    }
 
     // Splitting each line to each word so each unique vertex can be distinguished based on [0] later
     for (i = 0; i < lineCount; i++) {
         int nameCount = 0;
         split_string(lines[i], names[i], &nameCount);
-        
-        // to print current names
-        // for (j = 0; j < nameCount; j++) {
-        //     printf("Current line %d, current name %d: %s\n", i+1, j, names[i][j]);
-        // }
     }
 
-    // to copy the unique names at the start of each line
+    // Copy the unique names at the start of each line
     for (k = 0; k < vertexCount; k++){
         strcpy(vertexNames[k], names[k][0]);
-        strcpy(nodes[k].name, names[k][0]);
     }
-    // to check unique names
-    // for (k=0; k < vertexCount; k++){
-    //     printf("%s\n", vertexNames[k]);
-    // }
-
-    // Adding links to nodes
-    for (i = 0; i < vertexCount; i++) {
-        // Start by finding fromIndex, looks at index 0
-        int fromIndex = find_index(names[i][0], vertexNames, vertexCount);
-        // Checks until -1 is reached
-        for (j = 1; j < MAX_VERTICES && strcmp(names[i][j], "-1") != 0; j++) {
-            // Find toIndex, now looping through the names after 0
-            int toIndex = find_index(names[i][j], vertexNames, vertexCount);
-            // Validation if any are not found
-            // Notices fromindex < toIndex, it's there to stop the doubling of links for when doing to and from
-            // Uses the fromIndex counter such that only those higher will be considered
-            if (fromIndex != -1 && toIndex != -1 && fromIndex < toIndex) {
-                // Adds the link to both
-                add_link(&nodes[fromIndex], toIndex);
-                add_link(&nodes[toIndex], fromIndex);
-                // For checking
-                // printf("From %s to %s\n", names[i][0], names[i][j]);
-            }
-        }
-    }
-
-    // Print the links to verify
-    // for (i = 0; i < vertexCount; i++) {
-    //     printf("%s's links: ", nodes[i].name);
-    //     for (j = 0; j < nodes[i].linkCount; j++) {
-    //         printf("%s ", vertexNames[nodes[i].links[j]]);
-    //     }
-    //     printf("\n");
-    // }
 
     // GRAPH SETUP
     graph_init(graph, vertexNames, vertexCount);
 
     // Adding of edges
     for (i = 0; i < vertexCount; i++) {
-        for (j = 0; j < nodes[i].linkCount; j++) {
-            int toIndex = nodes[i].links[j];
-            // Has the greater than validation to avoid duplicates
-            if (i < toIndex) {
-                graph_add_edge(graph, i, toIndex);
+        int fromIndex = i;
+        // Validation to check for -1 in names
+        for (j = 1; j < MAX_VERTICES && strcmp(names[i][j], "-1") != 0; j++) {
+            // uses toIndex to match with the correct nodes
+            int toIndex = find_index(names[i][j], vertexNames, vertexCount);
+            
+            if (fromIndex < toIndex) {
+                graph_add_edge(graph, fromIndex, toIndex);
             }
         }
     }
@@ -262,7 +173,7 @@ int graph_setup(Graph *graph, Vertex nodes[MAX_VERTICES], int *totalNodes) {
     printf("Input start vertex for traversal: ");
     scanf("%s", nodeName);
 
-    // has case insensitivity
+    // Has case insensitivity
     startIndex = find_index(nodeName, vertexNames, vertexCount);
 
     if (startIndex == -1){

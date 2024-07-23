@@ -1,2 +1,0 @@
-GRAPH.txt
-Clark

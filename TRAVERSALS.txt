@@ -1,8 +1,22 @@
-Bruce     1
-Clark     2
-Diana     3
-Hal       2
+zero      4
+one       3
+two       5
+three     2
+four      3
+five      5
+six       4
+seven     2
+eight     3
+nine      6
+ten       3
+eleven    3
+twelve    5
+thirteen  4
+fourteen  1
+fifteen   4
+sixteen   3
+seventeen 2
 
-Clark Diana Hal Bruce 
+one five two zero four nine six three seven eight ten thirteen twelve eleven seventeen sixteen fifteen fourteen 
 
-Clark Diana Bruce Hal 
+one five four seven zero two six nine eight eleven fifteen seventeen ten thirteen sixteen twelve fourteen three 
