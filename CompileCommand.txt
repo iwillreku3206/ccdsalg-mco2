@@ -1,1 +1,0 @@
-gcc -std=c99 -Wall -Werror -o group6.exe src\bfs.c src\dfs.c src\file.c src\graph.c src\queue.c src\stack.c src\main.c
