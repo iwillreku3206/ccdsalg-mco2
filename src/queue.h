@@ -27,7 +27,7 @@ typedef struct {
 } Queue;
 
 void queue_init(Queue *q);
-int queue_enqueue(Queue *q,  int value);
+int queue_enqueue(Queue *q, int value);
 SQItem queue_dequeue(Queue *q);
 SQItem queue_head(Queue *q);
 SQItem queue_tail(Queue *q);
