@@ -1,0 +1,6 @@
+So DFS is working fine on everything EXCEPT the current DFS1.txt
+it was working previously but now its breaking. Everywhere else 
+it is fine and in digit form, theres no problem
+Even DFS2.txt is working
+
+The issue seems to happen in that txt file in BFS?? idk why but in the digit form, it works
