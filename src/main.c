@@ -24,7 +24,7 @@ int main() {
 	if (startIndex > -1) {
 		// For printing the output
 
-		FILE *traversals = fopen("../TRAVERSALS.txt", "w");
+		FILE *traversals = fopen("./TRAVERSALS.txt", "w");
 		if (traversals == NULL) {
 			printf("Writing error.\n");
 			return 1;
