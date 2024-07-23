@@ -9,25 +9,17 @@ void queue_init(Queue *q) {
 }
 
 int queue_enqueue(Queue *q, int value) {
-	// Convert arguments to QueueValue struct
-	SQItem item;
-	item.value = value;
-	item.type = ITEM_TYPE_VALUE;
-
 	if (q->size >= QUEUE_MAX_SIZE) {
 		return QUEUE_ERR_OVERFLOW;
 	}
 
 	QueueNode *newNode = malloc(sizeof(QueueNode));
 	newNode->next = NULL;
-	newNode->value = item;
+	newNode->value.value = value;
+	newNode->value.type = ITEM_TYPE_VALUE;
 
 	if (q->tail != NULL) {
 		q->tail->next = newNode;
-	}
-
-	if (q->head == NULL) {
-		q->head = newNode;
 	}
 
 	if (q->head == NULL) {
@@ -54,6 +46,10 @@ SQItem queue_dequeue(Queue *q) {
 	free(oldHead);
 
 	q->size--;
+
+  if (q->head == NULL) {
+    q->tail = NULL;
+  }
 
 	return returnValue;
 }
