@@ -29,9 +29,7 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file) {
     discovered[from] = true;
 
     while (!queue_empty(&queue)) {
-        printf("LOOP START\n");
         int vertex = queue_dequeue(&queue).value;
-        printf("CURRENT VERTEX: %d\n", vertex);
         printf("%s ", graph->vertexList[vertex]);
         fprintf(file, "%s ", graph->vertexList[vertex]);
 
@@ -49,15 +47,12 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file) {
 
         // Sort the array
         sort_by_name(graph->vertexList, nextVertices, nextCount);
-        printf("JUST SORTED\n");
 
         // Enqueue the next vertices in the list, in order
         for (int i = 0; i < nextCount; i++) {
             queue_enqueue(&queue, nextVertices[i]);
             graph_add_edge(bfsTree, vertex, nextVertices[i]);
-            printf("ADDED EDGE %d\n", vertex);
             discovered[nextVertices[i]] = true;
-            printf("discovered %d\n", vertex);
         }
     }
 }
