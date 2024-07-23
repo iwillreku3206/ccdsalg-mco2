@@ -46,6 +46,7 @@ int main() {
 
 	// 	// bfs and dfs was edited to print into the text file as well as print
 	// 	// the names of each node instead of the previous just index + 1 version
+
 		bfs(&graph, &bfsTree, startIndex, traversals);
 		fprintf(traversals, "\n\n");
 		printf("\n\n");

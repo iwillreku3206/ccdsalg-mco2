@@ -1,19 +1,19 @@
 18
-zero one seven -1
-one zero four -1
-two three five -1
-three two six ten seventeen -1
+zero one two -1
+one zero two four five -1
+two zero one three five -1
+three two ten -1
 four one seven eight -1
-five two six eight -1
-six three five ten -1
-seven zero four eleven -1
-eight four five eleven twelve -1
-nine ten thirteen -1
-ten three six nine thirteen seventeen -1
-eleven seven eight twelve -1
-twelve eight eleven -1
-thirteen nine ten sixteen seventeen -1
-fourteen fifteen -1
-fifteen fourteen sixteen -1
-sixteen thirteen fifteen seventeen -1
-seventeen three ten thirteen sixteen -1
+five one two six nine -1
+six five nine ten -1
+seven four fourteen -1;
+eight four nine eleven twelve -1
+nine five six eight thirteen -1
+ten three six thirteen seventeen -1
+eleven eight fourteen fifteen -1
+twelve eight nine fifteen sixteen -1
+thirteen ten sixteen seventeen -1
+fourteen seven eleven fifteen -1
+fifteen eleven twelve fourteen seventeen -1
+sixteen twelve thirteen seventeen -1
+seventeen ten thirteen fifteen sixteen -1
