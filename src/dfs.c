@@ -55,7 +55,7 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int activeIndex, bool discovere
 	// Get current vertex from the nodes so that we can limit loops to the number of links it has
     Vertex* currentVertex = &nodes[activeIndex];
 
-    // sort_vertices(nodes, currentVertex->links, currentVertex->linkCount);
+    sort_vertices(nodes, currentVertex->links, currentVertex->linkCount);
     
 	// Check all of the adjacencies it has
     for (int i = 0; i < currentVertex->linkCount; i++) {
