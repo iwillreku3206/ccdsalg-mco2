@@ -30,22 +30,34 @@ int main() {
 		}
 
 		// Prints the node names,
-        for (i = 0; i < nodeCount; i++) {
-            int connectionCount = 0;
-            for (j = 0; j < nodeCount; j++) {
-                if (graph.adjacencyMatrix[i][j]) {
-                    connectionCount++;
-                }
-            }
-            // SET TO 9, the outputs in the specs seem to be of size 9 or so
-            // May be adjusted to be higher later, just following the specs for now
-            fprintf(traversals, "%-9s %d\n", graph.vertexList[i], connectionCount);
-            printf("%-9s %d\n", graph.vertexList[i], connectionCount);
-        }
+		for (i = 0; i < nodeCount; i++) {
+			int connectionCount = 0;
+			for (j = 0; j < nodeCount; j++) {
+				if (graph.adjacencyMatrix[i][j]) {
+					connectionCount++;
+				}
+			}
+			// SET TO 9, the outputs in the specs seem to be of size 9 or so
+			// May be adjusted to be higher later, just following the specs for
+			// now
+			fprintf(traversals, "%-9s %d\n", graph.vertexList[i],
+					connectionCount);
+			printf("%-9s %d\n", graph.vertexList[i], connectionCount);
+		}
 		fprintf(traversals, "\n");
 
-	// 	// bfs and dfs was edited to print into the text file as well as print
-	// 	// the names of each node instead of the previous just index + 1 version
+		for (int i = 0; i < graph.vertexCount; i++) {
+			printf("%s ", graph.vertexList[i]);
+			for (int j = 0; j < graph.vertexCount; j++) {
+				printf("%d ", graph.adjacencyMatrix[i][j]);
+			}
+			printf("\n");
+		}
+
+		// 	// bfs and dfs was edited to print into the text file as well as
+		// print
+		// 	// the names of each node instead of the previous just index + 1
+		// version
 
 		bfs(&graph, &bfsTree, startIndex, traversals);
 		fprintf(traversals, "\n\n");
