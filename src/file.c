@@ -195,7 +195,11 @@ with +1 to consider the last "-1">
 
 int linear_search(String A[], String x, int n) {
 	for (int i = 0; i < n; i++) {
-		if (strcmp(A[i], x) == 0) {
+    String t1;
+    String t2;
+    lowercase_name(t1, A[i]);
+    lowercase_name(t2, x);
+		if (strcmp(t1, t2) == 0) {
 			return i;
 		}
 	}
