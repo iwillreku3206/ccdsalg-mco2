@@ -1,9 +1,9 @@
 #include "bfs.h"
 #include "dfs.h"
+#include "display.h"
 #include "file.h"
 #include "graph.h"
 #include <stdio.h>
-#include "display.h"
 #include <stdlib.h>
 
 #include "commonTypes.h"
@@ -20,10 +20,8 @@ int main() {
 
 	int nodeCount;
 
-	// Contains the reading of the text file as well as compilation of nodes
-	// and setting up connections
-	// Returns -1 if terminating
-	// int startIndex = graph_setup(&graph, &nodeCount);
+	// prompt the user for filename, load the graph in from the file
+	// and prompt user again for the start index
 	int startIndex;
 	graph_setup(&graph, &startIndex);
 	nodeCount = graph.vertexCount;
@@ -32,14 +30,13 @@ int main() {
 		exit(1);
 	} else {
 		// For printing the output
-
 		FILE *traversals = fopen("./TRAVERSALS.txt", "w");
 		if (traversals == NULL) {
 			printf("Writing error.\n");
 			return 1;
 		}
 
-		// Prints the node names and their link count
+		// Prints the node names and their link count (degree)
 		for (i = 0; i < nodeCount; i++) {
 			int connectionCount = 0;
 			for (j = 0; j < nodeCount; j++) {
@@ -47,29 +44,19 @@ int main() {
 					connectionCount++;
 				}
 			}
-			// name length currently set to only print 8 digits
-			fprintf(traversals, "%-8s %d\n", graph.vertexList[i],
+			fprintf(traversals, "%s %d\n", graph.vertexList[i],
 					connectionCount);
-			// printf("%-8s %d\n", graph.vertexList[i], connectionCount);
 		}
 		fprintf(traversals, "\n");
 
-		// for (int i = 0; i < graph.vertexCount; i++) {
-		// 	// printf("%s ", graph.vertexList[i]);
-		// 	for (int j = 0; j < graph.vertexCount; j++) {
-		// 		printf("%d ", graph.adjacencyMatrix[i][j]);
-		// 	}
-		// 	printf("\n");
-		// }
-
-		// Triggers search trees
+		// run traversals 
 		bfs(&graph, &bfsTree, startIndex, traversals);
 		fprintf(traversals, "\n\n");
-		// printf("\n\n");
 		dfs(&graph, &dfsTree, startIndex, traversals);
 
 		fclose(traversals);
 
+    // bonus
 		open_window(graph);
 		open_window(bfsTree);
 	}
