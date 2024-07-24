@@ -1,4 +1,7 @@
 /**********************************************************************************************
+ *	MCO2 DECLARATION: This file is not our own code, but is for the window library we used
+ *	for the bonus feature
+ *
 *
 *   raylib v5.0 - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
 *

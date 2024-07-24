@@ -1,73 +1,72 @@
 #include "dfs.h"
 #include "graph.h"
 #include "stack.h"
-#include <stdio.h>
 #include "util.h"
+#include <stdio.h>
 #include <string.h>
 
-/* Runs the recursion for the DFS
-Precondition: A valid graph was given to start the DFS
-@param Graph *graph <Graph that will be the source of the vertices>
-@param Graph *dfsTree <Graph that will be modified to contain the resulting tree>
-@param int from <Will become the next adjacent node's index to continue the recursion>
-@param bool discovered[] <Array to track discovered vertices>
-@param FILE *file <The TRAVERSALS.txt where the movements will be printed>
-@return none, will keep running while there are still nodes to check and continuously update the dfsTree
-*/
-void dfs_recursion(Graph *graph, Graph *dfsTree, int from, bool discovered[], FILE *file) {
-    // Set current to discovered
-    discovered[from] = true;
+/** dfs_recusion - Runs the recursion for the DFS
+ * Precondition: A valid graph was given to start the DFS
+ * @param graph - Graph that will be the source of the vertices
+ * @param dfsTree - Graph that will be modified to contain the resulting tree
+ * @param from - Becomes the next adjacent node's index to continue the
+ *               recursion
+ * @param discovered - Array to track discovered vertices
+ * @param file - The file TRAVERSALS.txt where the movements will be printed
+ */
+void dfs_recursion(Graph *graph, Graph *dfsTree, int from, bool discovered[],
+				   FILE *file) {
+	// Mark current as discovered
+	discovered[from] = true;
 
-    // Print current vertex
-    fprintf(file, "%s ", graph->vertexList[from]);
-    // printf("%s ", graph->vertexList[from]);
+	// Print current vertex
+	fprintf(file, "%s ", graph->vertexList[from]);
 
-    // Array to hold indices of adjacent vertices
-    int links[MAX_VERTICES];
-    int linkCount = 0;
+	// Array to hold indices of adjacent vertices
+	int links[MAX_VERTICES];
+	int linkCount = 0;
 
-    // Find all adjacent vertices
-    for (int i = 0; i < graph->vertexCount; i++) {
-        if (graph->adjacencyMatrix[from][i]) {
-            links[linkCount] = i;
-            linkCount++;
-        }
-    }
+	// Find all adjacent vertices
+	for (int i = 0; i < graph->vertexCount; i++) {
+		if (graph->adjacencyMatrix[from][i]) {
+			links[linkCount] = i;
+			linkCount++;
+		}
+	}
 
-    // Sort the adjacent vertices
-    sort_by_name(graph->vertexList, links, linkCount);
+	// Sort the adjacent vertices
+	sort_by_name(graph->vertexList, links, linkCount);
 
-    // Check all adjacent vertices
-    for (int i = 0; i < linkCount; i++) {
-        int adjacentIndex = links[i];
-        
-        // If undiscovered, add edge and recurse
-        if (!discovered[adjacentIndex]) {
-            graph_add_edge(dfsTree, from, adjacentIndex);
-            dfs_recursion(graph, dfsTree, adjacentIndex, discovered, file);
-        }
-    }
+	// Check all adjacent vertices
+	for (int i = 0; i < linkCount; i++) {
+		int adjacentIndex = links[i];
+
+		// If undiscovered, add edge and recurse
+		if (!discovered[adjacentIndex]) {
+			graph_add_edge(dfsTree, from, adjacentIndex);
+			dfs_recursion(graph, dfsTree, adjacentIndex, discovered, file);
+		}
+	}
 }
 
-/* Contains the logic for containing the Depth-First Search
-Precondition: A valid graph has been set up
-@param Graph *graph <Graph that will be the source of the vertices>
-@param Graph *dfsTree <Graph that will be modified to contain the resulting tree>
-@param int from <Starting point node's index>
-@param FILE *file <The TRAVERSALS.txt where the movements will be printed>
-@return none, puts result in new dfsTree
-*/
+/** dfs - Contains the logic for containing the Depth-First Search
+ * Precondition - A valid graph has been set up
+ * @param graph - Graph that will be the source of the vertices
+ * @param dfsTree - Graph that will be modified to contain the resulting tree
+ * @param from - Starting point node's index
+ * @param file - The TRAVERSALS.txt where the movements will be printed
+ */
 void dfs(Graph *graph, Graph *dfsTree, int from, FILE *file) {
-    // Initialize everything
-    int i;
-    bool discovered[MAX_VERTICES];
-    graph_init(dfsTree, graph->vertexList, graph->vertexCount);
+	// Initialize everything
+	int i;
+	bool discovered[MAX_VERTICES];
+	graph_init(dfsTree, graph->vertexList, graph->vertexCount);
 
-    // Initialize all ids to be undiscovered
-    for (i = 0; i < graph->vertexCount; i++) {
-        discovered[i] = false;
-    }
+	// Initialize all ids to be undiscovered
+	for (i = 0; i < graph->vertexCount; i++) {
+		discovered[i] = false;
+	}
 
-    // Start recursion
-    dfs_recursion(graph, dfsTree, from, discovered, file);
+	// Start recursion
+	dfs_recursion(graph, dfsTree, from, discovered, file);
 }
