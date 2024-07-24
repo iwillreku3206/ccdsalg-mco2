@@ -22,9 +22,12 @@ int main() {
 	// Contains the reading of the text file as well as compilation of nodes
 	// and setting up connections
 	// Returns -1 if terminating
-	int startIndex = graph_setup(&graph, &nodeCount);
+	// int startIndex = graph_setup(&graph, &nodeCount);
+	int startIndex;
+	graph_setup(&graph, &startIndex);
+	nodeCount = graph.vertexCount;
 
-	if (startIndex == -1){
+	if (startIndex == -1) {
 		exit(1);
 	} else {
 		// For printing the output
