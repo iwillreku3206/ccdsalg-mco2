@@ -1,8 +1,30 @@
-Bruce    1
-Clark    2
-Diana    3
-Hal      2
+A        8
+B        2
+C        4
+D        3
+E        6
+F        2
+G        2
+H        4
+I        4
+J        4
+K        4
+L        4
+M        2
+N        2
+O        4
+P        5
+Q        2
+R        3
+S        2
+T        3
+U        5
+V        1
+W        3
+X        3
+Y        3
+Z        1
 
-Diana Bruce Clark Hal 
+A B D E O S W Y Z V H I C J L P F M T K U G X R Q N 
 
-Diana Bruce Clark Hal 
+A B V D H G P E C F O M L I J K N X W U T S Y R Q Z 

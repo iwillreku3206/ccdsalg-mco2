@@ -60,7 +60,7 @@ int main() {
 
 		// Triggers search trees
 		bfs(&graph, &bfsTree, startIndex, traversals);
-		fprintf(traversals, "\n\n");
+		// fprintf(traversals, "\n\n");
 		// printf("\n\n");
 		dfs(&graph, &dfsTree, startIndex, traversals);
 
