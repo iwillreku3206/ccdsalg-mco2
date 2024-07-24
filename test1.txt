@@ -5,5 +5,5 @@ E D G A -1
 F H G -1
 A B E H -1
 B C A -1
-G E F H-1
+G E F H -1
 H F A G -1
