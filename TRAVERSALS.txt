@@ -1,11 +1,22 @@
-A        2
-B        1
-S        3
-D        1
-C        4
-E        2
-F        2
-G        3
-H        2
+zero     5
+one      3
+two      4
+three    3
+four     4
+five     2
+six      3
+seven    4
+eight    5
+nine     4
+ten      2
+eleven   5
+twelve   6
+thirteen 3
+fourteen 4
+fifteen  4
+sixteen  3
+seventeen 4
 
-A B S C G D E F H A B S C D E H G F 
+seventeen fifteen sixteen ten three eleven fourteen twelve thirteen six eight seven zero nine two four one five 
+
+seventeen fifteen eleven eight four five two one zero fourteen seven six nine thirteen sixteen twelve three ten 

@@ -1,0 +1,19 @@
+18
+zero one two four seven fourteen -1
+one zero two four -1
+two zero one five six -1
+three six ten seventeen -1
+four zero one five eight -1
+five two four -1
+six two three nine -1
+seven zero eight eleven fourteen -1
+eight four seven nine eleven twelve -1
+nine six eight twelve thirteen -1
+ten three seventeen -1
+eleven seven eight twelve fourteen fifteen -1
+twelve eight nine eleven thirteen fifteen sixteen -1
+thirteen nine twelve sixteen -1
+fourteen zero seven eleven fifteen -1
+fifteen eleven twelve fourteen seventeen -1
+sixteen twelve thirteen seventeen -1
+seventeen three ten fifteen sixteen -1

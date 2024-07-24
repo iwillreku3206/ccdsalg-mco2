@@ -53,13 +53,13 @@ int main() {
 		}
 		fprintf(traversals, "\n");
 
-		// for (int i = 0; i < graph.vertexCount; i++) {
-		// 	printf("%s ", graph.vertexList[i]);
-		// 	for (int j = 0; j < graph.vertexCount; j++) {
-		// 		printf("%d ", graph.adjacencyMatrix[i][j]);
-		// 	}
-		// 	printf("\n");
-		// }
+		for (int i = 0; i < graph.vertexCount; i++) {
+			// printf("%s ", graph.vertexList[i]);
+			for (int j = 0; j < graph.vertexCount; j++) {
+				printf("%d ", graph.adjacencyMatrix[i][j]);
+			}
+			printf("\n");
+		}
 
 		// Triggers search trees
 		bfs(&graph, &bfsTree, startIndex, traversals);
