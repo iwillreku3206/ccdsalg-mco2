@@ -1,22 +1,30 @@
-zero     5
-one      3
-two      4
-three    3
-four     4
-five     2
-six      3
-seven    4
-eight    5
-nine     4
-ten      2
-eleven   5
-twelve   6
-thirteen 3
-fourteen 4
-fifteen  4
-sixteen  3
-seventeen 4
+A        8
+B        2
+C        4
+D        3
+E        6
+F        3
+G        2
+H        4
+I        4
+J        4
+K        4
+L        4
+M        2
+N        2
+O        4
+P        5
+Q        2
+R        3
+S        2
+T        3
+U        5
+V        1
+W        3
+X        3
+Y        3
+Z        2
 
-seventeen fifteen sixteen ten three eleven fourteen twelve thirteen six eight seven zero nine two four one five 
+E A C J L O P B D S W Y Z F R U I K M G H Q V T X N 
 
-seventeen fifteen eleven eight four five two one zero fourteen seven six nine thirteen sixteen twelve three ten 
+E A B V D H G P Q R C F O M L I J K N X W U T S Y Z 
