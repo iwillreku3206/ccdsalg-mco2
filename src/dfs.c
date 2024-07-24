@@ -29,7 +29,8 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int from, bool discovered[], FI
     // Find all adjacent vertices
     for (int i = 0; i < graph->vertexCount; i++) {
         if (graph->adjacencyMatrix[from][i]) {
-            links[linkCount++] = i;
+            links[linkCount] = i;
+            linkCount++;
         }
     }
 
@@ -48,7 +49,7 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int from, bool discovered[], FI
     }
 }
 
-/* Contains the logic for doing the Depth-First Search
+/* Contains the logic for containing the Depth-First Search
 Precondition: A valid graph has been set up
 @param Graph *graph <Graph that will be the source of the vertices>
 @param Graph *dfsTree <Graph that will be modified to contain the resulting tree>
@@ -62,7 +63,7 @@ void dfs(Graph *graph, Graph *dfsTree, int from, FILE *file) {
     bool discovered[MAX_VERTICES];
     graph_init(dfsTree, graph->vertexList, graph->vertexCount);
 
-    // Set all ids to undiscovered to initialize
+    // Initialize all ids to be undiscovered
     for (i = 0; i < graph->vertexCount; i++) {
         discovered[i] = false;
     }

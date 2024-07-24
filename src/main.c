@@ -9,8 +9,11 @@
 #include "util.h"
 
 int main() {
+	// Contains the original graph structure
 	Graph graph;
+	// Contains the updated graph structures
 	Graph bfsTree;
+	Graph dfsTree;
 	int i;
 	int j;
 
@@ -32,7 +35,7 @@ int main() {
 			return 1;
 		}
 
-		// Prints the node names,
+		// Prints the node names and their link count
 		for (i = 0; i < nodeCount; i++) {
 			int connectionCount = 0;
 			for (j = 0; j < nodeCount; j++) {
@@ -40,8 +43,7 @@ int main() {
 					connectionCount++;
 				}
 			}
-			// SET TO 8, the outputs in the specs seem to be of size 8 or so
-			// May be adjusted to be higher later, just following the specs for now
+			// name length currently set to only print 8 digits
 			fprintf(traversals, "%-8s %d\n", graph.vertexList[i],
 					connectionCount);
 			// printf("%-8s %d\n", graph.vertexList[i], connectionCount);
@@ -56,10 +58,11 @@ int main() {
 		// 	printf("\n");
 		// }
 
+		// Triggers search trees
 		bfs(&graph, &bfsTree, startIndex, traversals);
 		fprintf(traversals, "\n\n");
 		// printf("\n\n");
-		dfs(&graph, &bfsTree, startIndex, traversals);
+		dfs(&graph, &dfsTree, startIndex, traversals);
 
 		fclose(traversals);
 	}
