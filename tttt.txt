@@ -1,0 +1,27 @@
+26
+A B D E O S W Y Z -1
+B A V -1
+C E F R U -1
+D A H I -1
+E A C J L O P -1
+F C O Z    -1
+G H P -1
+H D G P U -1
+I D J L X -1
+J E I K Y -1
+K J N W X -1
+L E I M U -1
+M L O -1
+N K X -1
+O A E F M -1
+P E G H Q R -1
+Q P R -1
+R C P Q -1
+S A T -1
+T S U Y -1
+U C H L T W -1
+V B -1
+W A K U -1
+X I K N -1
+Y A J T -1
+Z A F -1

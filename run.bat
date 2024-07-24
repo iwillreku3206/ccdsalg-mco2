@@ -1,3 +1,3 @@
-gcc -std=c99 -Wall -Werror -o main.exe src\stack.c src\util.c src\dfs.c src\bfs.c src\queue.c src\main.c src\graph.c src\file.c
+gcc -std=c99 -Wall -Werror -lraylib -o main.exe src\display.c src\util.c src\stack.c src\queue.c src\fdgraphviz.c src\main.c src\file.c src\dfs.c src\graph.c src\bfs.c 
 main
 pause
