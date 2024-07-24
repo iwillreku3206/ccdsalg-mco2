@@ -1,6 +1,4 @@
-#include "C:\raylib\raylib\src\raylib.h"
-#include "fdgraphviz.h"
-#include <stdio.h>
+#include "display.h"
 
 void draw_edge(Node a, Node b) {
     Vector2 c, d;
@@ -23,9 +21,14 @@ void draw_node(Node a) {
     DrawText(a.name, n.x - measure / 2, n.y - 10, 20, BLACK);
 }
 
-void open_window(Graph g, Node vertices[]) {
+void open_window(Graph g) {
     int i, j;
-    InitWindow(1600, 900, "Graph");
+    Node vertices[MAX_VERTICES];
+    SetTraceLogLevel(LOG_ERROR);
+    initialize(g, vertices);
+    force_directed(g, vertices, FORCE_THRESHOLD, MAX_ITERATIONS);
+
+    InitWindow(X_MAX, Y_MAX, "Graph");
 
     while(!WindowShouldClose()) {
         BeginDrawing();
@@ -48,7 +51,6 @@ void open_window(Graph g, Node vertices[]) {
             // DrawCircleLinesV(end, 50, BLACK);
             // measure = MeasureText("Hello", 20);
             // DrawText("Hello", start.x - measure / 2, start.y - 10, 20, BLACK);
-            
             
         EndDrawing();
     }

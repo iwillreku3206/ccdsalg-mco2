@@ -3,6 +3,7 @@
 #include "file.h"
 #include "graph.h"
 #include <stdio.h>
+#include "display.h"
 
 #include "commonTypes.h"
 #include "util.h"
@@ -65,6 +66,8 @@ int main() {
 		dfs(&graph, &bfsTree, startIndex, traversals);
 
 		fclose(traversals);
+
+		open_window(graph);
 	}
 
 	return 0;
