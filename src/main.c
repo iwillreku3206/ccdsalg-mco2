@@ -50,17 +50,17 @@ int main() {
 		}
 		fprintf(traversals, "\n");
 
-		// for (int i = 0; i < graph.vertexCount; i++) {
-		// 	printf("%s ", graph.vertexList[i]);
-		// 	for (int j = 0; j < graph.vertexCount; j++) {
-		// 		printf("%d ", graph.adjacencyMatrix[i][j]);
-		// 	}
-		// 	printf("\n");
-		// }
+		for (int i = 0; i < graph.vertexCount; i++) {
+			printf("%s ", graph.vertexList[i]);
+			for (int j = 0; j < graph.vertexCount; j++) {
+				printf("%d ", graph.adjacencyMatrix[i][j]);
+			}
+			printf("\n");
+		}
 
 		// Triggers search trees
 		bfs(&graph, &bfsTree, startIndex, traversals);
-		// fprintf(traversals, "\n\n");
+		fprintf(traversals, "\n\n");
 		// printf("\n\n");
 		dfs(&graph, &dfsTree, startIndex, traversals);
 
