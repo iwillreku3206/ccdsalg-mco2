@@ -1,6 +1,6 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
-#include "C:\raylib\raylib\src\raylib.h"
+#include "raylib.h"
 #include "fdgraphviz.h"
 #include <stdio.h>
 

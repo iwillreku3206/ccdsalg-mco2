@@ -15,8 +15,6 @@
 #define Y_MAX 990
 #define MAX_VERTEX_PLACEMENT 50 // 330 for circle formation without force directed
 #define PI_CONST 3.141592653589
-#define REPULSION_CONST 30000
-#define SPRING_CONST 1
 
 typedef struct {
     String name;
@@ -31,5 +29,7 @@ Node repulsion_force(Node a, Node b, float strength); // 1.8 for Nodes < 10
 Node attraction_force(Node a, Node b, float strength); // 1.2 for Nodes < 10
 float cooling_factor(float factor);
 void force_directed(Graph g, Node vertices[], float threshold, int maxIterations);
+void initialize_borders(Node borders[], int nx, int ny);
+Node global_force(Node a, Node borders[], float rStr, float aStr);
 
 #endif

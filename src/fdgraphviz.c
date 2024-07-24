@@ -8,11 +8,8 @@ float get_magnitude(Node n) {
 Node origin_vector(Node a, Node b) {
     //vector from Node a --> b
     Node o;
-    o.x = a.x - b.x;
-    o.y = a.y - b.y;
-
-    //because the way graphics are rendered, y value increases when going down instead of up
-    // o.y = -1 * o.y;
+    o.x = b.x - a.x;
+    o.y = b.y - a.y;
 
     // printf("(%.2f, %.2f)\n", o.x, o.y);
 
@@ -48,12 +45,10 @@ void initialize(Graph g, Node vertices[]) {
 }
 
 Node repulsion_force(Node a, Node b, float strength) {
-    Node f = unit_vector(origin_vector(a,b));
-    // Node f = origin_vector(b,a);
+    Node f = unit_vector(origin_vector(b,a));
     float scalar;
 
     scalar = pow(IDEAL_EDGE_LENGTH, strength) / pow(get_magnitude(origin_vector(b,a)), 1);
-    // scalar = REPULSION_CONST / pow(get_magnitude(origin_vector(b,a)), 2);
     // printf("Repulsion from %s to %s: (%.2f, %.2f) * %.2f or %.2f / %.2f --> ", a.name, b.name, f.x, f.y, scalar, pow(IDEAL_EDGE_LENGTH, 2), get_magnitude(origin_vector(b,a)));
     f.x = scalar * f.x;
     f.y = scalar * f.y;
@@ -63,12 +58,10 @@ Node repulsion_force(Node a, Node b, float strength) {
 }
 
 Node attraction_force(Node a, Node b, float strength) {
-    Node f = unit_vector(origin_vector(b,a));
-    // Node f = origin_vector(a,b);
+    Node f = unit_vector(origin_vector(a,b));
     float scalar;
 
     scalar = pow(get_magnitude(origin_vector(b,a)), strength) / pow(IDEAL_EDGE_LENGTH, 1);
-    // scalar = SPRING_CONST * log(get_magnitude(origin_vector(b,a))/IDEAL_EDGE_LENGTH);
     // printf("Attraction from %s to %s: (%.2f, %.2f) * %.2f or %.2f / %.2f --> ", a.name, b.name, f.x, f.y, scalar, pow(get_magnitude(origin_vector(b,a)), 2), pow(IDEAL_EDGE_LENGTH, 1));
     f.x = scalar * f.x;
     f.y = scalar * f.y;
@@ -76,21 +69,11 @@ Node attraction_force(Node a, Node b, float strength) {
     return f;
 }
 
-float max_force(Graph g, Node vertices[], float coolingFactor) {
+float max_force(Graph g, Node vertices[], float coolingFactor, float rStr, float aStr) {
     Node max, current, rCurrent, aCurrent, repulsion, attraction;
     int i, j;
-    float rStr, aStr;
     max.x = 0;
     max.y = 0;
-
-    if(g.vertexCount <= 10) {
-        rStr = 1.8;
-        aStr = 1.2;
-    }
-    else if(g.vertexCount > 10) {
-        rStr = 1.5;
-        aStr = 1.2;
-    }
 
     for(i = 0; i < g.vertexCount; i++) {
         rCurrent.x = 0;
@@ -127,13 +110,76 @@ float cooling_factor(float factor) {
     return factor * COOLING_FACTOR;
 }
 
+void initialize_borders(Node borders[], int nx, int ny) {
+    int i;
+    Node xBorderForces[nx], yBorderForces[ny];
+
+    for(i = 0; i < nx; i++) {
+        if(i < nx / 2) {
+            xBorderForces[i].x = 0 + i * X_MAX / ((nx - 2) / 2);
+            xBorderForces[i].y = 0;
+        }
+        else {
+            xBorderForces[i].x = 0 + (i - nx / 2) * X_MAX / ((nx - 2) / 2);
+            xBorderForces[i].y = Y_MAX;
+        }
+        // printf("(%.2f, %.2f)\n", xBorderForces[i].x, xBorderForces[i].y);
+    }
+
+    for(i = 0; i < ny; i++) {
+        if(i < ny / 2) {
+            yBorderForces[i].x = 0;
+            yBorderForces[i].y = 0 + (i + 1) * Y_MAX / ((ny + 2) / 2);
+        }
+        else {
+            yBorderForces[i].x = X_MAX;
+            yBorderForces[i].y = 0 + (i + 1 - ny / 2) * Y_MAX / ((ny + 2) / 2);
+        }
+        // printf("(%.2f, %.2f)\n", yBorderForces[i].x, yBorderForces[i].y);
+    }
+    
+    for(i = 0; i < nx + ny; i++) {
+        if(i < nx) {
+            borders[i] = xBorderForces[i];
+        }
+        else {
+            borders[i] = yBorderForces[i - nx];
+        }
+    }
+
+}
+
+Node global_force(Node a, Node borders[], float rStr, float aStr) {
+    int i;
+    Node repulsion, attraction, rForce, mid, force;
+
+    rForce.x = 0;
+    rForce.y = 0;
+    mid.x = X_MAX / 2;
+    mid.y = Y_MAX / 2;
+    for(i = 0; i < 60; i++) {
+        repulsion = repulsion_force(a, borders[i], rStr);
+        rForce.x = rForce.x + repulsion.x;
+        rForce.y = rForce.y + repulsion.y;
+    }
+    attraction = attraction_force(a, mid, aStr);
+    
+    force.x = rForce.x + attraction.x;
+    force.y = rForce.y + attraction.y;
+
+    return force;
+}
+
 void force_directed(Graph g, Node vertices[], float threshold, int maxIterations) {
     int i, j, k, x, y;
     Node repulsion, attraction, rForce, aForce;
     Node forces[MAX_VERTICES];
+    Node borderForces[60];
     float rStr, aStr;
     float factor = COOLING_FACTOR;
     i = 0;
+
+    initialize_borders(borderForces, 42, 18);
 
     if(g.vertexCount <= 10) {
         rStr = 1.8;
@@ -145,7 +191,7 @@ void force_directed(Graph g, Node vertices[], float threshold, int maxIterations
     }
 
     // printf("%f %d %f\n", max_force(g, vertices), i, FORCE_THRESHOLD);
-    while(i < maxIterations && max_force(g, vertices, factor) > threshold) {
+    while(i < maxIterations && max_force(g, vertices, factor, rStr, aStr) > threshold) {
         for(j = 0; j < g.vertexCount; j++) {
             rForce.x = 0;
             rForce.y = 0;
@@ -174,23 +220,23 @@ void force_directed(Graph g, Node vertices[], float threshold, int maxIterations
 
             if(x + 60 > X_MAX) {
                 vertices[j].x = X_MAX - 60;
+                x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
             }
             else if(x - 60 < 0) {
                 vertices[j].x = 60;
-            }
-            else {
-                vertices[j].x = x;
+                x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
             }
             
             if(y + 60 > Y_MAX) {
                 vertices[j].y = Y_MAX - 60;
+                y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
             }
             else if(y - 60 < 0) {
                 vertices[j].y = 60;
+                y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
             }
-            else {
-                vertices[j].y = y;
-            }
+            vertices[j].x = x;
+            vertices[j].y = y;
             // printf("(%.2f, %.2f)\n", vertices[j].x, vertices[j].y);
         }
         factor = cooling_factor(factor);

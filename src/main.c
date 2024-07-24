@@ -71,6 +71,7 @@ int main() {
 		fclose(traversals);
 
 		open_window(graph);
+		open_window(bfsTree);
 	}
 
 	return 0;
