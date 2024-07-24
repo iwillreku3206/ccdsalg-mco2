@@ -214,27 +214,57 @@ void force_directed(Graph g, Node vertices[], float threshold, int maxIterations
             // printf("Force on %s: (%.2f, %.2f)\n", vertices[j].name, forces[j].x, forces[j].y);
         }
 
+        attraction.x = X_MAX / 2;
+        attraction.y = Y_MAX / 2;
+
         for(j = 0; j < g.vertexCount; j++) {
             x = vertices[j].x + factor * forces[j].x;
             y = vertices[j].y + factor * forces[j].y;
 
             if(x + 60 > X_MAX) {
                 vertices[j].x = X_MAX - 60;
-                x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
+                // x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
             }
             else if(x - 60 < 0) {
                 vertices[j].x = 60;
-                x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
+                // x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr, aStr).x);
             }
             
             if(y + 60 > Y_MAX) {
                 vertices[j].y = Y_MAX - 60;
-                y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
+                // y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
             }
             else if(y - 60 < 0) {
                 vertices[j].y = 60;
-                y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
+                // y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr, aStr).y);
             }
+
+            if(x + 60 > X_MAX || x - 60 < 0) {
+                x = vertices[j].x + factor * (forces[j].x + global_force(vertices[j], borderForces, rStr + 1.3, aStr + 0.2).x);
+                rForce.x = 0;
+                rForce.y = 0;
+                for(k = 0; k < g.vertexCount; k++) {
+                    if(j != k) {
+                        repulsion = repulsion_force(vertices[k], vertices[j], rStr);
+                        rForce.x = rForce.x + repulsion.x;
+                        forces[k].x = forces[k].x + rForce.x + attraction_force(vertices[k], attraction, aStr).x;
+                    }
+                }
+            }
+
+            if(y + 60 > Y_MAX || y - 60 < 0) {
+                y = vertices[j].y + factor * (forces[j].y + global_force(vertices[j], borderForces, rStr + 1.3, aStr + 0.2).y);
+                rForce.x = 0;
+                rForce.y = 0;
+                for(k = 0; k < g.vertexCount; k++) {
+                    if(j != k) {
+                        repulsion = repulsion_force(vertices[k], vertices[j], rStr);
+                        rForce.y = rForce.y + repulsion.y;
+                        forces[k].y = forces[k].y + rForce.y + attraction_force(vertices[k], attraction, aStr).y;
+                    }
+                }
+            }
+
             vertices[j].x = x;
             vertices[j].y = y;
             // printf("(%.2f, %.2f)\n", vertices[j].x, vertices[j].y);

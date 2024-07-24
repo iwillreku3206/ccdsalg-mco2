@@ -9,11 +9,11 @@
 
 #define MAX_ITERATIONS 1000 // hard cap on amount of iterations for calculating vertex position
 #define FORCE_THRESHOLD __FLT_EPSILON__
-#define IDEAL_EDGE_LENGTH 50 // edge length in pixels
+#define IDEAL_EDGE_LENGTH 45 // edge length in pixels
 #define COOLING_FACTOR 0.975
 #define X_MAX 1760
 #define Y_MAX 990
-#define MAX_VERTEX_PLACEMENT 50 // 330 for circle formation without force directed
+#define MAX_VERTEX_PLACEMENT 100 // 330 for circle formation without force directed
 #define PI_CONST 3.141592653589
 
 typedef struct {
