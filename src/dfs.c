@@ -20,7 +20,7 @@ void dfs_recursion(Graph *graph, Graph *dfsTree, int from, bool discovered[], FI
 
     // Print current vertex
     fprintf(file, "%s ", graph->vertexList[from]);
-    printf("%s ", graph->vertexList[from]);
+    // printf("%s ", graph->vertexList[from]);
 
     // Array to hold indices of adjacent vertices
     int links[MAX_VERTICES];

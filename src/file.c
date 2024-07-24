@@ -117,6 +117,7 @@ int graph_setup(Graph *graph, int *totalNodes) {
         printf("%s not found.\n", fileName);
         fclose(file);
         return -1;
+        
     }
 
     // Read starting from the vertex count

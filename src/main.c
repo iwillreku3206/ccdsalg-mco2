@@ -3,6 +3,7 @@
 #include "file.h"
 #include "graph.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "commonTypes.h"
 #include "util.h"
@@ -20,7 +21,9 @@ int main() {
 	// Returns -1 if terminating
 	int startIndex = graph_setup(&graph, &nodeCount);
 
-	if (startIndex > -1) {
+	if (startIndex == -1){
+		exit(1);
+	} else {
 		// For printing the output
 
 		FILE *traversals = fopen("./TRAVERSALS.txt", "w");
@@ -37,12 +40,11 @@ int main() {
 					connectionCount++;
 				}
 			}
-			// SET TO 9, the outputs in the specs seem to be of size 9 or so
-			// May be adjusted to be higher later, just following the specs for
-			// now
-			fprintf(traversals, "%-9s %d\n", graph.vertexList[i],
+			// SET TO 8, the outputs in the specs seem to be of size 8 or so
+			// May be adjusted to be higher later, just following the specs for now
+			fprintf(traversals, "%-8s %d\n", graph.vertexList[i],
 					connectionCount);
-			printf("%-9s %d\n", graph.vertexList[i], connectionCount);
+			// printf("%-8s %d\n", graph.vertexList[i], connectionCount);
 		}
 		fprintf(traversals, "\n");
 
@@ -54,14 +56,9 @@ int main() {
 		// 	printf("\n");
 		// }
 
-		// 	// bfs and dfs was edited to print into the text file as well as
-		// print
-		// 	// the names of each node instead of the previous just index + 1
-		// version
-
 		bfs(&graph, &bfsTree, startIndex, traversals);
 		fprintf(traversals, "\n\n");
-		printf("\n\n");
+		// printf("\n\n");
 		dfs(&graph, &bfsTree, startIndex, traversals);
 
 		fclose(traversals);

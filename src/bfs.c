@@ -30,7 +30,7 @@ void bfs(Graph *graph, Graph *bfsTree, int from, FILE *file) {
 
     while (!queue_empty(&queue)) {
         int vertex = queue_dequeue(&queue).value;
-        printf("%s ", graph->vertexList[vertex]);
+        // printf("%s ", graph->vertexList[vertex]);
         fprintf(file, "%s ", graph->vertexList[vertex]);
 
         // Place all discoverable vertices into an array
