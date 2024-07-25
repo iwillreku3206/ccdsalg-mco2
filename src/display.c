@@ -8,7 +8,8 @@ work of other students and/or persons.
 ***************************************************************************/
 
 /*
- Description: This file is responsible for interaction with the raylib library
+ Description: This file is responsible for interaction with the raylib library.
+              Important note: raylib.h is NOT our file. It simply serves to link this code with the raylib library
  Programmed by: Hiroyuki Tabe
  [Acknowledgements: 
  	https://stackoverflow.com/questions/69863663/how-do-i-link-and-compile-raylib-on-windows
