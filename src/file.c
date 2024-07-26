@@ -42,7 +42,6 @@ void graph_setup(Graph *graph, int *startIndex) {
 
 	if (file == NULL) {
 		printf("%s not found.\n", fileName);
-		fclose(file);
 		exit(1);
 	}
 
